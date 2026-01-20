@@ -151,14 +151,19 @@ def download_server_files():
             if not line:
                 break
             
+            clean_line = line.strip()
+
             if not oauth_url_captured:
                 url = extract_oauth_url(line)
                 if url:
                     log("warn", f"Open the link in your browser: {url}")
                     oauth_url_captured = True
+                    continue
             
-            if "100.0%" in line or "successfully" in line.lower():
-                print(line.rstrip())
+            if "%" in line or " / " in line:
+                print(f"\r[INFO] Progress: {clean_line}", end="", flush=True)
+            elif "successfully" in line.lower():
+                print(f"\n[INFO] {clean_line}")
         
         process.wait()
         result = process
