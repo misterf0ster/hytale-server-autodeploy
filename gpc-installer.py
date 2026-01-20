@@ -163,7 +163,7 @@ def download_server_files():
                     continue
             
             if "%" in line or " / " in line:
-                log("info", f"\r Progress: {clean_line}", end="", flush=True)
+                print("info", f"\r Progress: {clean_line}", end="", flush=True)
             elif "Successfully" in line.lower():
                 log("info", f"\n {clean_line}")
         
