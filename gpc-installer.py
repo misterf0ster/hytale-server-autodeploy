@@ -8,7 +8,6 @@ import sys
 
 # config
 PORT = "5520"
-GUI_PORT = "5000"
 JAR_NAME = "HytaleServer.jar"
 ASSETS_FILE = "Assets.zip"
 DOWNLOADER_URL = "https://downloader.hytale.com/hytale-downloader.zip"
@@ -64,9 +63,9 @@ def extract_oauth_url(text):
 #1. Install dependencies
 def install_dependencies():
     log("info", "Installing dependencies")
-    subprocess.run("sudo apt-get update -y", shell=True, capture_output=True)
-    subprocess.run("sudo apt-get upgrade -y", shell=True, capture_output=True)
-    subprocess.run("sudo apt-get install -y git openjdk-25-jdk-headless screen curl unzip", shell=True, capture_output=True)
+    subprocess.run("sudo apt update -y", shell=True, capture_output=True)
+    subprocess.run("sudo apt upgrade -y", shell=True, capture_output=True)
+    subprocess.run("sudo apt install -y git openjdk-25-jdk-headless screen curl unzip", shell=True, capture_output=True)
     
     log("ok", "Dependencies installed")
 
@@ -75,7 +74,7 @@ def open_firewall():
     log("info", "Opening ports")
     
     log("info", f"Attempting to open UDP port {PORT}...")
-    result_game = subprocess.run(
+    subprocess.run(
         f"gcloud compute firewall-rules create hytale-game-rule --allow=udp:{PORT} --source-ranges=0.0.0.0/0 --quiet",
         shell=True, capture_output=True, text=True
     )
