@@ -21,7 +21,12 @@ Automated script for instant Hytale server deployment on **Google Cloud Platform
 Connect to your Google Cloud VM and run this single command to start the installation:
 
 ```bash
-sudo apt update && sudo apt install -y git python3 && git clone https://github.com/misterf0ster/hytale-server-autodeploy && cd hytale-server-autodeploy && pip3 install flask && python3 app.py
+#sudo apt update && sudo apt install -y git python3 python3-pip && git clone https://github.com/misterf0ster/hytale-server-autodeploy && cd hytale-server-autodeploy && pip3 install flask && python3 app.py
+sudo apt update && sudo apt install -y git python3 python3-pip screen && \
+git clone https://github.com/misterf0ster/hytale-server-autodeploy && \
+cd hytale-server-autodeploy && \
+pip3 install flask --break-system-packages || sudo apt install -y python3-flask && \
+screen -dmS hytale-web python3 app.py
 ```
 
 ## ⚙️ Management Commands
