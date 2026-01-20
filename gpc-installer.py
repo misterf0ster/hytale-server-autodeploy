@@ -8,6 +8,7 @@ import sys
 
 # config
 PORT = "5520"
+GUI_PORT = "5000"
 JAR_NAME = "HytaleServer.jar"
 ASSETS_FILE = "Assets.zip"
 DOWNLOADER_URL = "https://downloader.hytale.com/hytale-downloader.zip"
@@ -78,6 +79,7 @@ def open_firewall():
         f"gcloud compute firewall-rules create hytale-game-rule --allow=udp:{PORT} --source-ranges=0.0.0.0/0 --quiet",
         shell=True, capture_output=True, text=True
     )
+
     log("ok", "Port opened successfully")
     #if "insufficient authentication" in result_game.stderr or "ERROR" in result_game.stderr:
     #    log("warn", "Insufficient permissions to open ports automatically")
@@ -161,9 +163,9 @@ def download_server_files():
                     continue
             
             if "%" in line or " / " in line:
-                print(f"\r[INFO] Progress: {clean_line}", end="", flush=True)
-            elif "successfully" in line.lower():
-                print(f"\n[INFO] {clean_line}")
+                log("info", f"\r Progress: {clean_line}", end="", flush=True)
+            elif "Successfully" in line.lower():
+                log("info", f"\n {clean_line}")
         
         process.wait()
         result = process
