@@ -78,15 +78,15 @@ def open_firewall():
         f"gcloud compute firewall-rules create hytale-game-rule --allow=udp:{PORT} --source-ranges=0.0.0.0/0 --quiet",
         shell=True, capture_output=True, text=True
     )
-    
-    if "insufficient authentication" in result_game.stderr or "ERROR" in result_game.stderr:
-        log("warn", "Insufficient permissions to open ports automatically")
-        log("info", "Please open the port manually in the GCP Console:")
-        log("info", "1. Navigate to: https://console.cloud.google.com/networking/firewalls/list")
-        log("info", f"2. Create a rule named 'hytale-game-rule': UDP {PORT}, source 0.0.0.0/0")
-        log("warn", "WITHOUT THIS, THE SERVER WILL BE INACCESSIBLE!")
-    else:
-        log("ok", "Port opened successfully")
+    log("ok", "Port opened successfully")
+    #if "insufficient authentication" in result_game.stderr or "ERROR" in result_game.stderr:
+    #    log("warn", "Insufficient permissions to open ports automatically")
+    #    log("info", "Please open the port manually in the GCP Console:")
+    #    log("info", "1. Navigate to: https://console.cloud.google.com/networking/firewalls/list")
+    #    log("info", f"2. Create a rule named 'hytale-game-rule': UDP {PORT}, source 0.0.0.0/0")
+    #    log("warn", "WITHOUT THIS, THE SERVER WILL BE INACCESSIBLE!")
+    #else:
+    #    log("ok", "Port opened successfully")
 
 # 3.Download Hytale Downloader
 def download_downloader():
