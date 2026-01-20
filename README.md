@@ -37,7 +37,7 @@ sudo apt update && sudo apt install -y git python3 && git clone https://github.c
 ## 🛠️ How it works
 The installation process follows these strictly defined steps:
 1. **Dependency Check** — Verifies and installs system packages.
-2. **Network Config** — Opens firewall ports in GCP.
+2. **Network Config** — Opens firewall ports.
 3. **Core Sync** — Downloads official server binary.
 4. **Data Unpack** — Prepares game directory structure.
 5. **Start Script** — Generates a custom start.sh with optimized JVM flags.
