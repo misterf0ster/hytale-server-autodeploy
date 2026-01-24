@@ -310,6 +310,68 @@ def start_production_server():
     else:
         log("warn", "Failed to confirm startup")
 
+#8. Setup manager.sh
+import os
+
+def manager_sh():
+    log("info", "Creating manager.sh script...")
+    manager_content = """#!/bin/bash
+# Manager script for Hytale server
+
+BASE_DIR="$(pwd)/server"
+TOOLS_DIR="$(pwd)/tools"
+CONFIG_FILE="$(pwd)/config.txt"
+
+usage() {
+    echo "Command-line manager for Hytale server"
+    echo "Options:"
+    echo "  --all              Apply all updates"
+    echo "  --mods             Update password and mods from config.txt"
+    echo "  --world            Update world config"
+    echo "  --clean            Clear temp files"
+    echo "  --password [val]   Set password manually"
+    exit 1
+}
+
+if [ $# -eq 0 ]; then usage; fi
+
+while [[ $# -gt 0 ]]; do
+    case "$1" in
+        --all) DO_CLEAN=true; DO_WORLD=true; DO_MODS=true; shift ;;
+        --clean) DO_CLEAN=true; shift ;;
+        --world) DO_WORLD=true; shift ;;
+        --mods) DO_MODS=true; shift ;;
+        --password) NEW_PASS="$2"; shift 2 ;;
+        *) usage ;;
+    esac
+done
+
+if [ "$DO_CLEAN" = true ]; then
+    echo "Cleaning temporary files..."
+    rm -f "$BASE_DIR"/*.zip "$BASE_DIR"/*.bak "$BASE_DIR"/*.tmp
+fi
+
+if [ "$DO_WORLD" = true ]; then
+    python3 "$TOOLS_DIR/world_cfg.py"
+fi
+
+if [ -n "$NEW_PASS" ]; then
+    python3 "$TOOLS_DIR/server_cfg.py" "$NEW_PASS"
+elif [ "$DO_MODS" = true ]; then
+    python3 "$TOOLS_DIR/server_cfg.py"
+fi
+
+if [ "$DO_MODS" = true ]; then
+    echo "Updating mods..."
+    rm -rf "$BASE_DIR/mods"/*
+    python3 "$TOOLS_DIR/download_mods.py"
+fi
+"""
+    with open("manager.sh", "w", encoding="utf-8") as f:
+        f.write(manager_content)
+    os.chmod("manager.sh", 0o755)
+    log("ok", "manager.sh created successfully")
+
 #8. Final info
 def final_info(ram_size):
     log("ok", "INSTALLATION COMPLETE!")
@@ -336,6 +398,7 @@ def main():
     start_sh()
     server_auth()
     start_production_server()
+    manager_sh()
     final_info(ram_size)
     
 
