@@ -1,7 +1,7 @@
 import os, urllib.request, sys
 
 ROOT_DIR = os.path.abspath(os.path.join(os.path.dirname(__file__), ".."))
-MODS_DIR = os.path.join(ROOT_DIR, "server", "mods")
+MODS_DIR = os.path.join(ROOT_DIR,  "mods")
 CONFIG_TXT = os.path.join(ROOT_DIR, "config.txt")
 
 def log(status, message):
