@@ -25,6 +25,6 @@ else:
 
 if password:
     data = json.load(open(path_json))
-    data["password"] = password
+    data["Password"] = password
     json.dump(data, open(path_json, 'w'), indent=2)
     log("ok", "New passsword set")
