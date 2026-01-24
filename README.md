@@ -21,10 +21,10 @@ Automated script for instant Hytale server deployment on **Google Cloud Platform
 Connect to your Google Cloud VM and run this single command to start the installation:
 
 ```bash
-sudo apt update && sudo apt install -y git python3 && git clone https://github.com/misterf0ster/hytale-server-autodeploy && cd hytale-server-autodeploy && python3 gpc-installer.py
+sudo apt update && sudo apt install -y git python3 && git clone https://github.com/misterf0ster/hytale-server-autodeploy && cd hytale-server-autodeploy && python3 gcp-installer.py
 ```
 
-## ⚙️ Management Commands
+## ⚙️ Server Management Commands
 
 | Action | Command |
 | :--- | :--- |
@@ -34,15 +34,24 @@ sudo apt update && sudo apt install -y git python3 && git clone https://github.c
 | **Detach from console** | `Ctrl + A` then `D` |
 
 
-## 🛠️ How it works
-The installation process follows these strictly defined steps:
-1. **Dependency Check** — Verifies and installs system packages.
-2. **Network Config** — Opens firewall ports.
-3. **Core Sync** — Downloads official server binary.
-4. **Data Unpack** — Prepares game directory structure.
-5. **Start Script** — Generates a custom start.sh with optimized JVM flags.
-6. **Auth Flow** — Securely links the server to your Hytale account.
+## 🛠️ Server Management Tool (CLI)
+After the installation is complete, a manager.sh script is automatically generated in the root directory. This tool allows you to manage server settings and mods without manual JSON editing.
+
+## ⚙️ Management Commands Tool
+
+| Action | Command |
+| :--- | :--- |
+| **Full Sync** | `./manager.sh --all` |
+| **Update Mods & Pass** | `./manager.sh --mods` |
+| **Manual Password** | `./manager.sh --password <your_pass>` |
+| **Reset World Config** | `./manager.sh --world` |
+| **Cleanup Junk** | `./manager.sh --clean` |
 
 
-
-
+## 📝 Mod & Password Configuration (config.txt)
+To synchronize mods and update the server password, create a config.txt file in the root folder:
+```
+PASSWORD: my_secure_password
+MOD: https://example.com/mod-archive-1.jar
+MOD: https://example.com/mod-archive-2.jar
+```
